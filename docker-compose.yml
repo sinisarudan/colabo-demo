@@ -1,0 +1,80 @@
+version: '3.7'
+
+services:
+
+  db_mongo:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    ports:
+      - '27018:27017'
+    volumes:
+      - ./mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=colabo
+
+
+  db_mysql:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_USER: sir
+      MYSQL_ROOT_PASSWORD: 031091
+      MYSQL_DATABASE: colabo
+
+      MARIADB_USER: sir
+      MARIADB_ROOT_USER: sir
+      MARIADB_ROOT_PASSWORD: 031091
+      MARIADB_PASSWORD: 031091
+      MARIADB_DATABASE: colabo
+    # container_name: mariadb
+    volumes:
+      - ./dbdata_mysql:/var/lib/mysql
+    ports:
+      - '3307:3306'
+
+  db_postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    container_name: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: colabo-nest
+    # env_file: .env
+    environment:
+      - APP_PORT=${APP_PORT}
+      - MARIADB_URL=mysql://sir:031091@db_mysql:3306/colabo
+      # - MARIADB_URL=mysql://root@db_mysql:3306/colabo
+      - POSTGRES_URL=${POSTGRES_URL}
+      - MONGODB_URI=mongodb://db_mongo:27017/colabo
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db_mongo
+      - db_mysql
+      - db_postgres
+    volumes:
+      - ./src:/app/src
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: colabo-pgadmin
+    # env_file: .env
+    environment:
+      # - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - '5050:80'
+    depends_on:
+      - db_postgres

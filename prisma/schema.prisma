@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("POSTGRE_URL")
+
+  // we actually use a mariadb fork of mysql
+  provider = "mysql"
+  //         https://www.prisma.io/docs/orm/prisma-schema/overview/data-sources
+  //         https://www.prisma.io/docs/orm/overview/databases/mysql
+  //         "mysql://USER:PASSWORD@HOST:PORT/DATABASE"
+  url      = env("MARIADB_URL") //"mysql://sir:031091@localhost:3306/colabo"
+  // url      = "mysql://sir:031091@db_mysql:3307/colabo" //Dockerized
+  // url      = "mysql://sir:031091@localhost:3306/colabo"
+}
+
+// type MongoID = String @id @default(uuid()) @map("_id")
+
+model KNode {
+  id            String    @id @default(uuid()) @map("_id")
+  // id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  // id            String    @id @default(uuid()) @map("_id")
+  // id MongoID
+  // id            String    @id @default(dbgenerated()) @map("_id")
+  name          String
+  visual        Json?
+  activeVersion Int?
+  version       Int?
+  isPublic      Boolean   @default(true)
+  type          String
+  dataContent   Json
+  mapId         String?
+  iAmId         String?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model KEdge {
+  id            String    @id @default(uuid()) @map("_id")
+  // id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  // id            String    @id @default(uuid()) @map("_id")
+  // id MongoID
+  // id            String    @id @default(dbgenerated()) @map("_id")
+  name          String
+  // TODO!
+}
