@@ -31,8 +31,17 @@ Each `model` should be in the folder of its resource module (e.g. `src/resource/
 
 ### Tech Stack
 
+- Typescript
+- NodeJS
 - [NestJS](https://github.com/nestjs/nest) framework TypeScript starter repository.
-- ...
+- MongoDB
+- Mongoose
+- Prisma
+- OpenAPI / swagger
+- Passport
+- vitest
+- Playwright
+- Supertest
 
 ## Installation
 
