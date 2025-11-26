@@ -23,6 +23,7 @@ export class MongoDataServices
   ) {}
 
   onApplicationBootstrap() {
-    this.knodes = new MongoGenericRepository<KNode>(this.KNodeRepository);
+    // TODO! commented until fixed
+    // this.knodes = new MongoGenericRepository<KNode>(this.KNodeRepository);
   }
 }
