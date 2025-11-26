@@ -27,7 +27,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
 
-  const APP_PORT: number = parseInt(process.env.APP_PORT ?? '3005');
+  const APP_PORT: number = parseInt(process.env.APP_PORT ?? '3000');
   await app.listen(APP_PORT);
   console.log('Server listening on the APP_PORT: ', APP_PORT);
   console.log('process.env.MONGODB_URI', process.env.MONGODB_URI);
