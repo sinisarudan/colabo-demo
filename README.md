@@ -47,6 +47,8 @@ Each `model` should be in the folder of its resource module (e.g. `src/resource/
 
 ```bash
 $ pnpm install
+
+pnpm prisma generate
 ```
 
 ## Running the app
